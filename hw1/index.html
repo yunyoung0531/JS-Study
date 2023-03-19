@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var dollar = 60000;
+        var futureDollar = 0;
+        if (dollar >= 50000) {
+            futureDollar = (dollar * 1.2) * 1.2
+        } else if (dollar < 50000) {
+            futureDollar = (dollar * 1.15) * 1.15
+        }
+        futureDollar = Math.ceil(futureDollar)
+        console.log(futureDollar);
+    </script>
+
+    <script>
+        var first = 360;
+        first += (first * 2 / 3) + (first * 2 / 3 * 2 / 3);
+        console.log(first)
+    </script>
+
+    <p>태조 이성계가 태어난 년도는?</p>
+    <input type="text" id="answer">
+    <button id="send-answer">제출</button>
+    <script>
+        var count = 0;
+        document.getElementById('send-answer').addEventListener('click', function(){
+            // document.getElementById('send-answer').addEventListener('click', function() {
+            //     count++;
+            //     console.log("count는 ", count)
+            // })
+            if (document.getElementById('answer').value == "1335") {
+                alert("성공")
+            } else if(document.getElementById('answer').value != "1335") {
+                count++;
+                console.log("count는", count)
+            }
+            if (count >= 3){
+                alert("멍청아")
+            }
+        })
+    </script>
+</body>
+</html>
