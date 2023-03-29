@@ -30,3 +30,4 @@ $('.list').click(function(e){
     // data-id //테크닉!
     Tab(e.target.dataset.id);
 })
+
