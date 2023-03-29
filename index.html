@@ -15,13 +15,28 @@
 <body class="dark">
     <nav class="navbar navbar-light bg-dark">
         <div class="container-fluid">
-            <span class="navbar-brand">Navbar</span>
+            <span class="navbar-brand">YYShop</span>
             <span class="badge bg-dark">Dark 🔄</span>
             <button class="navbar-toggler" type="button">
             <span class="navbar-toggler-icon"></span>
             </button>
         </div>
     </nav>
+
+
+    <!-- 스크롤 내리면 글씨 작아지는 기능 -->
+    <!-- 숙제: 스크롤 진척 상황도.. 웹사이트 참고-->
+    <script>
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar-brand').css("font-size", "20px");
+            } else {
+                $('.navbar-brand').css("font-size", "25px");
+            }
+        })
+        
+
+    </script>
 
     <ul class="list-group">
         <li class="list-group-item">An item</li>
@@ -49,8 +64,14 @@
     </div>
 
     <script>
-        //변수
-        
+        //이벤트 버블링 방지
+        $('.black-bg').on('click', function(e) {
+            //내가 실제로 누른게 까만 배경일 때만 모달창 닫기
+            if (e.target == document.querySelector('.black-bg')) {
+                $('.black-bg').removeClass('show-modal')
+            }
+        })
+
     </script>
 
     <script>
@@ -114,6 +135,114 @@
         <button id="login" class="btn btn-warning">로그인</button>
     </div>
 
+    <!-- 회원약관 -->
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll;">
+        Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Harum quis blanditiis nisi est nulla, veritatis 
+        veniam? Perspiciatis, perferendis odio officia, cumque
+        sit, nesciunt obcaecati tempore culpa dolor voluptatum 
+        ex totam.</div>
+
+    <script>
+        // div 박스의 스크롤바 내린 양(scrollq) + 100(정확히는 눈에 보이는 div 높이 visualScroll) 
+        // == div박스의 실제 높이 (scrollHeight)
+        // 이면 alert창 띄우기
+        document.querySelector('.lorem').addEventListener('scroll', function() {
+            let scrollq = document.querySelector('.lorem').scrollTop
+            console.log("scrollq는", scrollq);
+            var scrollHeight = document.querySelector('.lorem').scrollHeight
+            console.log("scrollHeight는", scrollHeight);
+            var visualScroll = document.querySelector('.lorem').clientHeight
+            console.log("visualSCroll은 ", visualScroll)
+
+            if (scrollq + visualScroll == scrollHeight) {
+                alert("약관을 모두 확인 하셨네요");
+            }
+        })
+    </script>
+
+    <div style="height: 1000px"></div>
+
+    <!-- 캐러셀 (이미지 슬라이드) 만들기 -->
+    <!-- 1. 시작화면 만들기 -->
+    <!-- 2. 버튼 누른 후 최종화면 만들기 -->
+    <!-- 3. JS 기능 넣기와 transition 주기 -->
+    <div style="overflow: hidden">
+        <div class="slide-container">
+            <div class="slide-box">
+                <img src="https://codingapple.com/wp-content/uploads/2022/02/car1.png">
+            </div>
+            <div class="slide-box">
+                <img src="https://codingapple.com/wp-content/uploads/2022/02/car2.png">
+            </div>
+            <div class="slide-box">
+                <img src="https://codingapple.com/wp-content/uploads/2022/02/car3.png">
+            </div>
+        </div>
+    </div>
+    <div class="slide-btn">
+        <button class="slide-previous">previous</button>
+        <button class="slide-1">1</button>
+        <button class="slide-2">2</button>
+        <button class="slide-3">3</button>
+        <button class="slide-next">next</button>
+    </div>
+
+    <script>
+        // 3. 버튼2 누르면 최종화면으로 변하게
+        $('.slide-2').on('click', function() {
+            $('.slide-container').css('transform', 'translateX(-100vw)');
+        })
+
+        $('.slide-3').on('click', function() {
+            $('.slide-container').css('transform', 'translate(-200vw)');
+        })
+
+        $('.slide-1').on('click', function() {
+            $('.slide-container').css('transform', 'translateX(0vw)');
+        })
+
+        var currentPicture = 1;
+
+        $('.slide-next').on('click', function() {
+            // if (currentPicture == 1) {
+            //     $('.slide-container').css('transform', 'translateX(-100vw)'); 
+            //     currentPicture = 2;
+            // } else if (currentPicture == 2) {
+            //     $('.slide-container').css('transform', 'translateX(-200vw)');
+            //     currentPicture = 3;
+            // } else if (currentPicture == 3) {
+            //     $('.slide-container').css('transform', 'translateX(0vw)');
+            //     currentPicture = 1;
+            // }
+            if (currentPicture == 3) {
+                $('.slide-container').css('transform', 'translateX(0vw)');
+                currentPicture = 1;
+            } else {
+                $('.slide-container').css('transform', 'translateX(-' + currentPicture + '00vw)');
+                currentPicture++;
+            }
+        })
+        //1. 이전 버튼 구현하기
+        //2. 사진이 몇 개가 추가 되든 JS코드 수정 안 해도 잘 작동 할 수 있게끔 구현하기
+        //강의 하단 참고
+        // 0 : 1 // -100 : 2 // -200 :3
+        $('.slide-previous').on('click', function() {
+            if (currentPicture == 1) {
+                $('.slide-container').css('transform', 'translateX(-200vw)');
+                currentPicture = 3;
+            }
+            else if (currentPicture == 2) {
+                $('.slide-container').css('transform', 'translateX(0vw)');
+                currentPicture = 1;
+            }
+            else if (currentPicture == 3) {
+                $('.slide-container').css('transform', 'translateX(-100vw)');
+                currentPicture = 2;
+            }
+        })
+    </script>
+
     <div class="alert alert-danger">
         <span class="alert-second">5</span>초 이내 구매시 사은품 증정!
     </div>
@@ -124,7 +253,7 @@
             cnt--;
             if (cnt >= 0) {
                 document.querySelector('.alert-second').innerHTML = cnt;
-            }        
+            }
             if (cnt < 0) {
                 clearTimeout(timer);
                 document.querySelector('.alert').style.display="none";
@@ -145,7 +274,7 @@
         })
 
         $('#login').on('click', function() {
-            $('.black-bg').addClass('show-modal')
+            $('.black-bg').addClass("show-modal");
         })
 
         $('#close').on('click', function() {
